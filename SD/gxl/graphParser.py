@@ -18,9 +18,14 @@ class GraphParser():
 
         self.nodes_map = {}
         self.edges_map = {}
+        self.graph_info = {}
 
+        info = root.find('graph')
         nodes = root.findall('graph/node')
         edges = root.findall('graph/edge')
+
+        for k, v in info.attrib.items():
+            self.graph_info[k] = v
 
         i=0
         for node in nodes:

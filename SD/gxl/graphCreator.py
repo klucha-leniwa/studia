@@ -11,11 +11,15 @@ class GraphCreator():
         self.parsed_data = GraphParser()
         self.nodes_map = self.parsed_data.nodes_map
         self.edges_map = self.parsed_data.edges_map
+        self.graph_info = self.parsed_data.graph_info
         self.create()
 
     def create(self):
         """Create graph from nodes and edges"""
-        graph = nx.Graph()
+
+
+        if self.graph_info.has_key('edgemode') and self.graph_info['edgemode'] == ' directed':
+            graph = nx.DiGraph()
 
         for k, v in self.nodes_map.items():
             graph.add_node(k, v)
@@ -25,7 +29,7 @@ class GraphCreator():
             parent = self.find_node_by_attr(graph, v['from'])[0]
             graph.add_edge(child, parent, self.get_edge_attr(k))
 
-        self.draw(graph)
+        nx.write_dot(graph, 'dot')
 
     def draw(self, graph):
         nx.draw(graph)
