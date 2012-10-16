@@ -16,7 +16,7 @@ class GraphCreator():
 
     def create(self):
         """Create graph from nodes and edges"""
-
+        graph = nx.Graph()
 
         if self.graph_info.has_key('edgemode') and self.graph_info['edgemode'] == ' directed':
             graph = nx.DiGraph()
@@ -28,8 +28,6 @@ class GraphCreator():
             child = self.find_node_by_attr(graph, v['to'])[0]
             parent = self.find_node_by_attr(graph, v['from'])[0]
             graph.add_edge(child, parent, self.get_edge_attr(k))
-
-        nx.write_dot(graph, 'dot')
 
     def draw(self, graph):
         nx.draw(graph)
