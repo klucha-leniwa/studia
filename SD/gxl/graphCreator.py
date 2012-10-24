@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import networkx as nx
+import pygraphviz as pgv
 from graphParser import GraphParser
 
 
@@ -29,8 +30,13 @@ class GraphCreator():
             parent = self.find_node_by_attr(graph, v['from'])[0]
             graph.add_edge(child, parent, self.get_edge_attr(k))
 
+        self.draw(graph)
+
     def draw(self, graph):
-        nx.draw(graph)
+        nx.write_dot(graph,'file.dot')
+        G=pgv.AGraph('file.dot')
+        G.layout()
+        G.draw('file.png', format='png',prog='dot')
 
     def find_node_by_attr(self, graph, attr_val, attr='id'):
         """Find node by attribute value"""
