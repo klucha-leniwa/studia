@@ -2,6 +2,10 @@ from lxml import etree
 
 class GraphMaker():
 
+    def __init__(self):
+        self.is_directed = ''
+        self.root = ''
+
     def load_file(self, xml_file):
         """Load file from path given args"""
         self.xml_file = etree.parse(xml_file)
@@ -40,6 +44,9 @@ class GraphMaker():
         for edge in edges:
             self.edges_map[i] = edge.attrib
             i = i+1
+
+        if self.graph_info.has_key('edgemode') and self.graph_info['edgemode'] == ' directed':
+            self.is_directed = True
 
 
 if __name__ == '__main__':

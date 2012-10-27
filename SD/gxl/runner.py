@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import sys
 from graphMethods import GraphMethods
@@ -28,7 +30,16 @@ def main():
             msg += 'File type %s successfully load to xml and graph object was created' % graph.root
             print msg
 
-main()
+    elif args.file == None and args.action=='return_basics':
+        msg = "Runner creates graph object and perform given methods on it \n"
+        msg += "Basic usage: \n"
+        msg += "    -f | --file 'file_name' - loads graph structure from file, for example gxl file \n"
+        msg += "    -a | --action 'action_name' - performs action on previously created graph \n"
+        msg += "    -h | --help - prints this message \n"
+
+        print msg
+
+        sys.exit()
 
 
 if __name__ == '__main__':

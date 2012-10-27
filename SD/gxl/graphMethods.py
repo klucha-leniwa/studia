@@ -1,5 +1,7 @@
+#!/usr/bin/env python
+
 from graphMaker import GraphMaker
-import networkx as nx
+import helpers
 
 
 class GraphMethods(GraphMaker):
@@ -16,9 +18,19 @@ class GraphMethods(GraphMaker):
             for attr in self.edges_map[edge].items():
                 print  attr
 
-    def create_simple_graph_object(self):
+    def family_tree(self):
 
-        self.Graph = nx.Graph()
+        pairs = []
 
-        for k, v in self.nodes_map.items():
-            self.Graph.add_node(k, v)
+        if self.is_directed == True and self.root == 'gxl':
+            for k, v in self.edges_map.items():
+                child = helpers.find_node_by_attribute(self.nodes_map, v['to'])
+                parent = helpers.find_node_by_attribute(self.nodes_map, v['from'])
+                pairs.append([parent, child])
+
+        return pairs
+
+    def create_matrix(self):
+
+        pairs = self.family_tree()
+        ids = helpers.extract_ids(self.nodes_map)
