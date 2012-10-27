@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import networkx as nx
-import pygraphviz as pgv
+#import pygraphviz as pgv
 from graphParser import GraphParser
+import itertools
 
 
 class GraphCreator():
@@ -30,13 +31,12 @@ class GraphCreator():
             parent = self.find_node_by_attr(graph, v['from'])[0]
             graph.add_edge(child, parent, self.get_edge_attr(k))
 
-        self.draw(graph)
-
-    def draw(self, graph):
-        nx.write_dot(graph,'file.dot')
-        G=pgv.AGraph('file.dot')
-        G.layout()
-        G.draw('file.png', format='png',prog='dot')
+        self.union(graph)
+#    def draw(self, graph):
+#        nx.write_dot(graph,'file.dot')
+#        G=pgv.AGraph('file.dot')
+#        G.layout()
+#        G.draw('file.png', format='png',prog='dot')
 
     def find_node_by_attr(self, graph, attr_val, attr='id'):
         """Find node by attribute value"""
@@ -51,5 +51,34 @@ class GraphCreator():
                 attrs[k] = v
         return attrs
 
+    def get_neighbours(self, graph):
+
+        nodes_list = graph.nodes(data=True)
+        edges_list = graph.edges()
+        neighbors = {}
+        ids = []
+
+        for node in nodes_list:
+            ids.append(node[1]['id'])
+
+        for id in ids:
+            neighbors[id]= []
+
+        for edge in edges_list:
+            node = nodes_list[edge[0]]
+            node1 = nodes_list[edge[1]]
+            key = node[-1]['id']
+            neighbors[key].append(node1[-1]['id'])
+            
+            node = nodes_list[edge[1]]
+            node1 = nodes_list[edge[0]]
+            key = node[-1]['id']
+            neighbors[key].append(node1[-1]['id'])
+
+        return neighbors
+
+    def union(self, graph):
+        neighbors = self.get_neighbours(graph)
+        
 
 GraphCreator()
