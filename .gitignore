@@ -2,3 +2,4 @@
 *.project
 *.swp
 *.pyc
+python-modules/
