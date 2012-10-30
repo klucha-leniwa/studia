@@ -1,10 +1,15 @@
 #!/usr/bin/env python
-
-from graphMaker import GraphMaker
 import helpers
 
+class GraphMain():
 
-class GraphMethods(GraphMaker):
+    def __init__(self):
+        self.is_directed = ''
+        self.type = ''
+        self.nodes_map = ''
+        self.edges_map = ''
+        self.graph_info = ''
+        self.neighbors = ''
 
     def return_basics(self):
 
@@ -22,15 +27,29 @@ class GraphMethods(GraphMaker):
 
         pairs = []
 
-        if self.is_directed == True and self.root == 'gxl':
-            for k, v in self.edges_map.items():
+        if self.is_directed == True:
+            for v in self.edges_map.values():
                 child = helpers.find_node_by_attribute(self.nodes_map, v['to'])
                 parent = helpers.find_node_by_attribute(self.nodes_map, v['from'])
                 pairs.append([parent, child])
 
         return pairs
 
-    def create_matrix(self):
+    def get_neighbors(self):
 
-        pairs = self.family_tree()
+        self.neighbors = {}
         ids = helpers.extract_ids(self.nodes_map)
+        pairs = self.family_tree()
+
+        for id in ids:
+            self.neighbors[id] = []
+
+        for pair in pairs:
+            self.neighbors[pair[0]['id']].append(pair[1]['id'])
+            self.neighbors[pair[1]['id']].append(pair[0]['id'])
+
+        print self.neighbors
+
+
+if __name__ == '__main__':
+    'GraphMain'

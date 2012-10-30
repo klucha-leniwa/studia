@@ -1,29 +1,22 @@
+#!/usr/bin/env python
+
+from graphMain import GraphMain
 from lxml import etree
 
-class GraphMaker():
+class GraphGXL(GraphMain):
 
-    def __init__(self):
-        self.is_directed = ''
-        self.root = ''
 
     def load_file(self, xml_file):
         """Load file from path given args"""
-        self.xml_file = etree.parse(xml_file)
+        xml_file = etree.parse(xml_file)
+        self.parse_gxl(xml_file)
 
-    def check_type(self):
-        """Check file type by root name.
-        Run proper parsing method"""
-
-        self.root = self.xml_file.getroot().tag
-        parser = getattr(self, 'parse_%s' % self.root)
-        parser()
-
-    def parse_gxl(self):
+    def parse_gxl(self, xml_file):
         """Parse gxl file.
         Collect all edges and nodes with attributes and children"""
 
-        root = self.xml_file.getroot()
-
+        self.type = xml_file.getroot().tag
+        root = xml_file.getroot()
         self.nodes_map = {}
         self.edges_map = {}
         self.graph_info = {}
@@ -50,4 +43,4 @@ class GraphMaker():
 
 
 if __name__ == '__main__':
-    'graphMaker'
+    'GraphGXL'

@@ -7,4 +7,8 @@ def find_node_by_attribute(nodes, value, attribute='id'):
             return nodes[node]
 
 def extract_ids(nodes):
-    "sdss"
+    ids = []
+    for attrs in nodes.values():
+        ids.append(attrs['id']);
+
+    return ids
