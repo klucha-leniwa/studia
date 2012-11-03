@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import helpers
+import sys
 
 class GraphMain():
 
@@ -10,6 +11,7 @@ class GraphMain():
         self.edges_map = ''
         self.graph_info = ''
         self.neighbors = ''
+        self.matrix = ''
 
     def return_basics(self):
 
@@ -47,8 +49,6 @@ class GraphMain():
         for pair in pairs:
             self.neighbors[pair[0]['id']].append(pair[1]['id'])
             self.neighbors[pair[1]['id']].append(pair[0]['id'])
-
-        print self.neighbors
 
 
 if __name__ == '__main__':
