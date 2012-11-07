@@ -1,0 +1,9 @@
+domainString 0 0 0 0 1 0 0 0 0 
+simpleExampleSchema 0 0 1 1 0 1 0 1 0 
+Proc 0 1 0 1 1 0 0 1 0 
+Call 0 1 1 0 0 0 1 0 0 
+file 1 0 1 0 0 0 0 0 0 
+Var 0 1 0 0 0 0 1 1 0 
+line 0 0 0 1 0 1 0 1 1 
+Ref 0 1 1 0 0 1 1 0 0 
+domainInt 0 0 0 0 0 0 1 0 0 

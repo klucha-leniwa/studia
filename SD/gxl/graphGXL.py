@@ -6,7 +6,7 @@ from lxml import etree
 class GraphGXL(GraphMain):
 
 
-    def load_file(self, xml_file):
+    def load_gxl(self, xml_file):
         """Load file from path given args"""
         xml_file = etree.parse(xml_file)
         self.parse_gxl(xml_file)

@@ -18,13 +18,13 @@ def main():
     if args.file is not None:
 
         if args.input == 'gxl' and args.output == None:
-            xml_file = args.file
             try:
                 from graphGXL import GraphGXL
             except ImportError:
                 "Importing GraphGXL class failed, but don't panic"
             graph = GraphGXL()
-            graph.load_file(xml_file)
+            loader = getattr(graph, 'load_%s' % args.input)
+            loader(args.file)
 
             func = getattr(graph, args.action)
             func()
@@ -33,14 +33,15 @@ def main():
             print msg
 
         elif args.input == 'matrix':
-            matrix_file = args.file
             try:
                 from graphMatrix import GraphMatrix
             except ImportError:
                 "Importing GraphMatrix class failed, but don't panic"
             graph = GraphMatrix()
-            graph.load_file(matrix_file)
+            loader = getattr(graph, 'load_%s' % args.input)
+            loader(args.file)
 
+            sys.exit()
             func = getattr(graph, args.action)
             func()
             msg = '\n'
@@ -48,14 +49,14 @@ def main():
             print msg
 
         elif args.input == 'gxl' and args.output == 'matrix':
-            xml_file = args.file
             try:
                 from graphGXL import GraphGXL
                 from graphMatrix import GraphMatrix
             except ImportError:
                 "Importing GraphGXL and GraphMatrix classes failed, but don't panic"
             graph = GraphMatrix()
-            graph.load_file(xml_file)
+            loader = getattr(graph, 'load_%s' % args.input)
+            loader(args.file)
 
             func = getattr(graph, args.action)
             func()
@@ -70,8 +71,10 @@ def main():
     elif args.file == None and args.action =='return_basics':
         msg = "Runner creates graph object and perform given methods on it \n"
         msg += "Basic usage: \n"
-        msg += "    -x | --xml 'file_name' - loads graph structure from xml/gxl file \n"
-        msg += "    -a | --action 'action_name' - performs action on previously created graph \n"
+        msg += "    -i | --input 'file_type' - type of input file for example: gxl \n"
+        msg += "    -a | --action 'action_name' - action you want to perform on graph for examle: get_neighbors \n"
+        msg += "    -f | --file 'file_name' - path to file \n"
+        msg += "    [-o | --output] 'file_type' - type of output file for example: matrix \n"
         msg += "    -h | --help - prints this message \n"
 
         print msg
