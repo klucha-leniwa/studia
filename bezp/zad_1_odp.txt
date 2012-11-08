@@ -1,0 +1,6 @@
+Przesunięcie: 2
+
+algorytm szyfrowania zastosowany w kodzie cezara bywa fragmentem bardziej zlozonych systemow szyfrowania takich jak szyfr vigenerea
+wspolczesnie najczesciej szyfru cezara uzywa sie z przesunieciem trzynascie bedacego prostym i szybkim sposobem na ukrycie tresci obecnie
+lamanie szyfru cezara jest banalne wiec jak kazda technika podmieniajaca pojedyncze litery alfabetu na inne nie oferuje on zadnego 
+bezpieczenstwa komunikacji

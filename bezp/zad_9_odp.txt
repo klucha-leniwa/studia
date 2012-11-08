@@ -1,0 +1,4 @@
+Swoje rozwiązanie stworzyłam na platformie Linux w oparciu o rsync oraz crontaba. 
+Dodałam do crontaba tworzenie kopii zapasowej każdego dnia o godzinie 1 (komenda: crontab -e)
+Wpis w crontabie wygląda następująco:
+  
