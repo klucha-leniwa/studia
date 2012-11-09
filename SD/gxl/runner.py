@@ -2,8 +2,7 @@
 
 import argparse
 import sys
-from graphMatrix import GraphMatrix
-from graphMain import GraphMain
+from graphProxy import GraphProxy
 
 def main():
 
@@ -17,56 +16,26 @@ def main():
 
     if args.file is not None:
 
-        if args.input == 'gxl' and args.output == None:
-            try:
-                from graphGXL import GraphGXL
-            except ImportError:
-                "Importing GraphGXL class failed, but don't panic"
-            graph = GraphGXL()
-            loader = getattr(graph, 'load_%s' % args.input)
-            loader(args.file)
-
-            func = getattr(graph, args.action)
-            func()
-            msg = '\n'
-            msg += 'File type %s successfully load to xml and graph object was created' % graph.type
-            print msg
-
-        elif args.input == 'matrix':
-            try:
-                from graphMatrix import GraphMatrix
-            except ImportError:
-                "Importing GraphMatrix class failed, but don't panic"
-            graph = GraphMatrix()
-            loader = getattr(graph, 'load_%s' % args.input)
-            loader(args.file)
-
-            sys.exit()
-            func = getattr(graph, args.action)
-            func()
-            msg = '\n'
-            msg += 'Matrix file load successfully and graph object was created'
-            print msg
-
-        elif args.input == 'gxl' and args.output == 'matrix':
-            try:
-                from graphGXL import GraphGXL
-                from graphMatrix import GraphMatrix
-            except ImportError:
-                "Importing GraphGXL and GraphMatrix classes failed, but don't panic"
-            graph = GraphMatrix()
-            loader = getattr(graph, 'load_%s' % args.input)
-            loader(args.file)
-
-            func = getattr(graph, args.action)
-            func()
-
-        else:
+        if args.input == None:
             msg = '\n'
             msg += 'You have to pass type of input file \n'
             msg += '    For instance: -f file_name -i gxl \n'
             print msg
-            sys.exit
+            sys.exit()
+
+
+        graph = GraphProxy()
+
+        loader = getattr(graph, 'load_%s' % args.input)
+        loader(args.file)
+
+        func = getattr(graph, args.action)
+        returned_data = func()
+        msg = '\n'
+        msg += 'File successfully loaded!'
+        msg += '\nResult of function:' + str(returned_data)
+        print msg
+
 
     elif args.file == None and args.action =='return_basics':
         msg = "Runner creates graph object and perform given methods on it \n"

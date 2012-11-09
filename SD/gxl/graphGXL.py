@@ -3,8 +3,8 @@
 from graphMain import GraphMain
 from lxml import etree
 
-class GraphGXL(GraphMain):
 
+class GraphGXL(GraphMain):
 
     def load_gxl(self, xml_file):
         """Load file from path given args"""

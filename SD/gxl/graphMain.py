@@ -7,11 +7,11 @@ class GraphMain():
     def __init__(self):
         self.is_directed = ''
         self.type = ''
-        self.nodes_map = ''
-        self.edges_map = ''
+        self.nodes_map = {}
+        self.edges_map = {}
         self.graph_info = ''
-        self.neighbors = ''
-        self.matrix = ''
+        self.neighbors = {}
+        self.matrix = {}
 
     def return_basics(self):
 
@@ -23,7 +23,9 @@ class GraphMain():
         for edge in self.edges_map.keys():
             print 'edge: ' + str(edge)
             for attr in self.edges_map[edge].items():
-                print  attr
+                print attr
+
+        return self.nodes_map
 
     def family_tree(self):
 
@@ -39,7 +41,6 @@ class GraphMain():
 
     def get_neighbors(self):
 
-        self.neighbors = {}
         ids = helpers.extract_ids(self.nodes_map)
         pairs = self.family_tree()
 
@@ -50,6 +51,7 @@ class GraphMain():
             self.neighbors[pair[0]['id']].append(pair[1]['id'])
             self.neighbors[pair[1]['id']].append(pair[0]['id'])
 
+        return self.neighbors
 
 if __name__ == '__main__':
     'GraphMain'
