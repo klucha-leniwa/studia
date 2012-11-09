@@ -25,7 +25,7 @@ class GraphMain():
             for attr in self.edges_map[edge].items():
                 print attr
 
-        return self.nodes_map
+        return self.nodes_map, self.edges_map
 
     def family_tree(self):
 

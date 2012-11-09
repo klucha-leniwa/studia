@@ -48,87 +48,36 @@ class GraphMatrix(GraphMain, GraphGXL):
             i = i+1
 
     def create_matrix(self):
-        """Create matrix and save to file matrix.txt"""
+        """Create matrix"""
 
         ids = helpers.extract_ids(self.nodes_map)
-        size = helpers.find_the_longest(ids) + 1
+        if self.neighbors == {}:
+            self.get_neighbors()
 
         for id in ids:
             self.matrix[id] = []
-            for neigbors in self.neighbors.values():
-                if id in neigbors:
-                    self.matrix[id].append(1)
+        for k, v in self.neighbors.items():
+            for id in ids:
+                if id in v:
+                    self.matrix[k].append(1)
                 else:
-                    self.matrix[id].append(0)
+                    self.matrix[k].append(0)
 
-        print self.matrix
-        sys.exit()
-
-        for k, v in self.matrix.items():
-            tmp = size - len(k)
-            row = ' '*tmp + '%s' % str(k)
-            for value in v:
-                tmp = size - len(str(value))
-                row += ' ' *tmp + '%s' % str(value)
-            nice_matrix.append(row)
-
-        for k, v in self.matrix.items():
-            self.matrix[k] = []
-            for value in v:
-                self.matrix[k].append(str(value) + ' ')
+        self.matrix['id_list'] = ids
 
         return self.matrix
 
     def save_matrix(self):
-        self.get_neighbors()
-        self.matrix = {}
-        nice_matrix = []
 
-        matrix_file = open('matrix_1.txt', 'w')
-        matrix_file_ugly = open('matrix_ugly_1.txt', 'w')
-        ids = helpers.extract_ids(self.nodes_map)
-        size = helpers.find_the_longest(ids) + 1
+        pretty_matrix_file = open('matrix_pretty.txt', 'w')
+        ugly_matrix_file = open('matrix_ugly.txt', 'w')
+        pretty_matrix = []
+        ugly_matrix = []
 
-        row = ' '*(size)
-        for id in ids:
-            tmp = size - len(id)
-            row += ' '*tmp + '%s' % str(id)
 
-        nice_matrix.append(row)
+        if self.matrix == {}:
+            self.create_matrix()
 
-        for id in ids:
-            self.matrix[id] = []
-            for neigbors in self.neighbors.values():
-                if id in neigbors:
-                    self.matrix[id].append(1)
-                else:
-                    self.matrix[id].append(0)
+        size = helpers.find_the_longest(self.matrix['ids']) + 1
 
-        for k, v in self.matrix.items():
-            tmp = size - len(k)
-            row = ' '*tmp + '%s' % str(k)
-            for value in v:
-                tmp = size - len(str(value))
-                row += ' ' *tmp + '%s' % str(value)
-            nice_matrix.append(row)
 
-        for row in nice_matrix:
-            matrix_file.write(row + '\n')
-        for k, v in self.matrix.items():
-            matrix_file_ugly.write(k + ' ')
-            self.matrix[k] = []
-            for value in v:
-                matrix_file_ugly.write(str(value) + ' ')
-                self.matrix[k].append(str(value) + ' ')
-            matrix_file_ugly.write('\n')
-
-        return self.matrix
-
-    def parse_matrix(self):
-
-        self.create_matrix()
-
-        for i in range(len(self.matrix.keys())):
-            self.nodes_map[i] = {'id' : self.matrix.keys()[i]}
-
-        return self.nodes_map
