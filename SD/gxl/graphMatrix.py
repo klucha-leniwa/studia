@@ -1,51 +1,57 @@
 #!/usr/bin/env python
 
+
 from graphMain import GraphMain
-from graphGXL import GraphGXL
 import helpers
 import sys
 
 
-class GraphMatrix(GraphMain, GraphGXL):
+class GraphMatrix(GraphMain):
 
     def load_matrix(self, file_path):
+
         matrix_file = open(file_path, 'r')
         matrix_file.seek(0)
-        self.neighbors = {}
 
         data = matrix_file.readlines()
-        almost_neighbors = {}
-        for i in range(len(data)):
-            data[i] = data[i].strip()
-            data[i] = data[i].split(' ')
-            almost_neighbors[data[i].pop(0)] = data[i]
-
-        for k in almost_neighbors.keys():
-            self.neighbors[k] = []
-
-        ids = almost_neighbors.keys()
-
-        for i in range(len(ids)):
-            j = 0
-            for k in almost_neighbors[ids[i]]:
-                if k == '1':
-                    self.neighbors[ids[i]].append(ids[j])
-                j = j+1
-
-        print self.neighbors
-
-        sys.exit()
-        for k, data in almost_neighbors.items():
-            for i in range(len(ids)):
-                self.nodes_map[i] = {'id': ids[i]}
+        almost_parsed_data = {}
 
         i = 0
-        for k, v in self.neighbors.items():
-            self.edges_map[i] = []
-            for node in v:
-                if '1' in node:
-                    self.edges_map[i] = {'v1': k, 'v2' : node[0]}
-            i = i+1
+        for line in data:
+            if 'id_list' not in line:
+                line = line.strip()
+                nodes = line.split(' ')
+                self.nodes_map[i] = {}
+                self.nodes_map[i]['id'] = nodes[0]
+                almost_parsed_data[nodes[0]] = nodes[1:]
+                i += 1
+            else:
+                line = line.strip()
+                ids = line.split(' ')
+                ids.remove('id_list')
+
+        matrix_file.seek(0)
+
+        parsed_data = {}
+        for id in ids:
+            parsed_data[id] = {}
+
+        for node, row in almost_parsed_data.items():
+            i = 0
+            for id in ids:
+                parsed_data[node][id] = row[i]
+                i = i + 1
+
+        i = 0
+        for node, row in parsed_data.items():
+            for pair in row.items():
+                if '1' in pair and not ({'v1': pair[0], 'v2': node} in self.edges_map.values()):
+                    self.edges_map[i] = {'v1': node, 'v2': pair[0]}
+                    i = i +1
+
+        self.is_directed = False
+
+        return 'File loaded sucessfully!!'
 
     def create_matrix(self):
         """Create matrix"""
@@ -71,13 +77,34 @@ class GraphMatrix(GraphMain, GraphGXL):
 
         pretty_matrix_file = open('matrix_pretty.txt', 'w')
         ugly_matrix_file = open('matrix_ugly.txt', 'w')
-        pretty_matrix = []
-        ugly_matrix = []
-
 
         if self.matrix == {}:
             self.create_matrix()
 
-        size = helpers.find_the_longest(self.matrix['ids']) + 1
+        size = int(helpers.find_the_longest(self.matrix['id_list']) + 1)
 
+        for key, nodes_names in self.matrix.items():
+            if key == 'id_list':
+                tmp = (size - len(key)) * ' '
+                ugly_matrix_file.write(str(key) + ' ')
+                pretty_matrix_file.write(str(key) + tmp)
+                for node in nodes_names:
+                    tmp = (size - len(str(node))) * ' '
+                    ugly_matrix_file.write(str(node) + ' ')
+                    pretty_matrix_file.write(str(node) + tmp)
+                ugly_matrix_file.write('\n')
+                pretty_matrix_file.write('\n')
 
+        for key, nodes_list in self.matrix.items():
+            if key is not 'id_list':
+                tmp = (size - len(key)) * ' '
+                ugly_matrix_file.write(str(key) + ' ')
+                pretty_matrix_file.write(str(key) + tmp)
+                for single_node in nodes_list:
+                    tmp = (size - len(str(single_node))) * ' '
+                    ugly_matrix_file.write(str(single_node) + ' ')
+                    pretty_matrix_file.write(str(single_node) + tmp)
+                ugly_matrix_file.write('\n')
+                pretty_matrix_file.write('\n')
+
+        return 'Matrix saved in files: matrix_pretty (nicely formatted) and matrix_ugly'
