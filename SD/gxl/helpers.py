@@ -21,3 +21,10 @@ def find_the_longest(strings_list):
             the_longest = len(string)
 
     return the_longest
+
+def mark_as_visited(graph, node, node_neighbor_list):
+        for neighbor in node_neighbor_list:
+            if graph.visited_list[neighbor]['visited'] == False:
+                graph.visited_list[neighbor]['visited'] = True
+                mark_as_visited(graph, neighbor, graph.neighbors[neighbor])
+

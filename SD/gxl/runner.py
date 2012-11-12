@@ -8,7 +8,6 @@ def main():
 
     parser = argparse.ArgumentParser('create graph object and make some operations')
     parser.add_argument('-i', '--input', action='store')
-    parser.add_argument('-o', '--output', action='store')
     parser.add_argument('-f', '--file', action='store')
     parser.add_argument('-a', '--action', action='store', default='return_basics')
     args = parser.parse_args()
@@ -23,7 +22,6 @@ def main():
             print msg
             sys.exit()
 
-
         graph = GraphProxy()
 
         loader = getattr(graph, 'load_%s' % args.input)
@@ -34,6 +32,7 @@ def main():
         msg = '\n'
         msg += 'File successfully loaded!'
         msg += '\nResult of function:' + str(returned_data)
+        msg += '\n'
         print msg
 
 
@@ -43,7 +42,6 @@ def main():
         msg += "    -i | --input 'file_type' - type of input file for example: gxl \n"
         msg += "    -a | --action 'action_name' - action you want to perform on graph for examle: get_neighbors \n"
         msg += "    -f | --file 'file_name' - path to file \n"
-        msg += "    [-o | --output] 'file_type' - type of output file for example: matrix \n"
         msg += "    -h | --help - prints this message \n"
 
         print msg

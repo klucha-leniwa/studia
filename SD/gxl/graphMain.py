@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import helpers
-import sys
 from random import choice
 
 class GraphMain():
@@ -41,21 +40,15 @@ class GraphMain():
                 pairs.append([parent, child])
 
         else:
-            print 'a'
+            for edge in self.edges_map.values():
+                pairs.append([{'id':edge['v1']}, {'id':edge['v2']}])
 
         return pairs
 
     def get_neighbors(self):
 
         ids = helpers.extract_ids(self.nodes_map)
-
-        if self.is_directed:
-            pairs = self.family_tree()
-
-        else:
-            pairs = []
-            for edge in self.edges_map.values():
-                pairs.append([{'id':edge['v1']}, {'id':edge['v2']}])
+        pairs = self.family_tree()
 
         for id in ids:
             self.neighbors[id] = []
@@ -77,7 +70,7 @@ class GraphMain():
 
         id = choice(ids)
 
-        self.mark_as_visited(id, self.neighbors[id])
+        helpers.mark_as_visited(self, id, self.neighbors[id])
 
         for pair in self.visited_list.values():
             if False in pair.values():
@@ -89,12 +82,6 @@ class GraphMain():
             return 'Graph is integrated'
         else:
             return 'Graph not integrated'
-
-    def mark_as_visited(self, node, node_neighbor_list):
-        for neighbor in node_neighbor_list:
-            if self.visited_list[neighbor]['visited'] == False:
-                self.visited_list[neighbor]['visited'] = True
-                self.mark_as_visited(neighbor, self.neighbors[neighbor])
 
 
 if __name__ == '__main__':

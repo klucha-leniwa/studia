@@ -3,7 +3,6 @@
 
 from graphMain import GraphMain
 import helpers
-import sys
 
 
 class GraphMatrix(GraphMain):
@@ -107,4 +106,4 @@ class GraphMatrix(GraphMain):
                 ugly_matrix_file.write('\n')
                 pretty_matrix_file.write('\n')
 
-        return 'Matrix saved in files: matrix_pretty (nicely formatted) and matrix_ugly'
+        return 'Matrix saved in files: matrix_pretty (nicely formatted) and matrix_ugly (not formatted)'
