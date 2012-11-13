@@ -2,6 +2,7 @@
 import helpers
 from random import choice
 
+
 class GraphMain():
 
     def __init__(self):
@@ -62,21 +63,40 @@ class GraphMain():
     def check_integrity(self):
 
         if self.neighbors == {}:
-            self.get_neighbors()
+                self.get_neighbors()
         ids = helpers.extract_ids(self.nodes_map)
-        for id in ids:
-            self.visited_list[id] = {}
-            self.visited_list[id]['visited'] = False
 
-        id = choice(ids)
+        if self.is_directed == False:
 
-        helpers.mark_as_visited(self, id, self.neighbors[id])
+            for id in ids:
+                self.visited_list[id] = {}
+                self.visited_list[id]['visited'] = False
+            helpers.mark_as_visited(self, id, self.neighbors[id])
 
-        for pair in self.visited_list.values():
-            if False in pair.values():
-                self.is_integrated = False
-            else:
-                self.is_integrated = True
+            id = choice(ids)
+
+            for pair in self.visited_list.values():
+                if False in pair.values():
+                    self.is_integrated = False
+                else:
+                    self.is_integrated = True
+
+        else:
+            for id in ids:
+                self.visited_list[id] = {}
+                self.visited_list[id]['visited'] = False
+                self.visited_list[id]['visited_backwards'] = False
+
+            id = choice(ids)
+
+            helpers.mark_as_visited_in_directed(self, id, self.edges_map)
+
+            for pair in self.visited_list.values():
+                for val in pair.values():
+                    if val == False:
+                        self.is_integrated = False
+                    else:
+                        self.is_integrated = True
 
         if self.is_integrated:
             return 'Graph is integrated'
