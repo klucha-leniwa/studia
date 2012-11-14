@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import helpers
 from random import choice
+import sys
 
 
 class GraphMain():
@@ -63,7 +64,7 @@ class GraphMain():
     def check_integrity(self):
 
         if self.neighbors == {}:
-                self.get_neighbors()
+            self.get_neighbors()
         ids = helpers.extract_ids(self.nodes_map)
 
         if self.is_directed == False:
@@ -102,6 +103,30 @@ class GraphMain():
             return 'Graph is integrated'
         else:
             return 'Graph not integrated'
+
+    def find_path(self, start, end, ids_list):
+
+        distances = {}
+        distances[start] = {}
+
+        for id in (ids for ids in ids_list if ids != start):
+            distances[start][id] = ''
+
+        a = helpers.find_path_rec(end, self.neighbors[start])
+
+        print distances, self.neighbors, start, end, a
+        sys.exit()
+
+    def graph_radius(self):
+
+        if self.neighbors == {}:
+            self.get_neighbors()
+
+        ids = helpers.extract_ids(self.nodes_map)
+        start = choice(ids)
+        end = choice(ids)
+
+        self.find_path(start, end, ids)
 
 
 if __name__ == '__main__':
