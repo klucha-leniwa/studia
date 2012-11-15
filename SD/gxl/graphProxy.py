@@ -4,4 +4,4 @@ from graphMatrix import GraphMatrix
 
 class GraphProxy(GraphGXL, GraphMatrix):
     def hello(self):
-        print 'hello'
+        return 'hello'

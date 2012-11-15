@@ -46,3 +46,18 @@ def mark_as_visited_in_directed(graph, node, edges_list):
                 graph.visited_list[edge['from']]['visited_backwards'] = True
                 mark_as_visited_in_directed(graph, edge['from'], edges_list)
 
+def find_shortest_path(graph, start, end, path=[]):
+
+    path = path + [start]
+    if start == end:
+        return path
+    if not graph.neighbors.has_key(start):
+        return None
+    shortest = None
+    for node in graph.neighbors[start]:
+        if node not in path:
+            newpath = find_shortest_path(graph, node, end, path)
+            if newpath:
+                if not shortest or len(newpath) < len(shortest):
+                    shortest = newpath
+    return shortest

@@ -104,29 +104,40 @@ class GraphMain():
         else:
             return 'Graph not integrated'
 
-    def find_path(self, start, end, ids_list):
-
-        distances = {}
-        distances[start] = {}
-
-        for id in (ids for ids in ids_list if ids != start):
-            distances[start][id] = ''
-
-        a = helpers.find_path_rec(end, self.neighbors[start])
-
-        print distances, self.neighbors, start, end, a
-        sys.exit()
-
     def graph_radius(self):
 
-        if self.neighbors == {}:
-            self.get_neighbors()
+        self.check_integrity()
 
-        ids = helpers.extract_ids(self.nodes_map)
-        start = choice(ids)
-        end = choice(ids)
+        if self.is_integrated:
+            ids = helpers.extract_ids(self.nodes_map)
+            start = choice(ids)
+            end = choice(ids)
+            sum = 0
+            tmp = 0
 
-        self.find_path(start, end, ids)
+            paths = {}
+            for id in ids:
+                paths[id] = {}
+                for next_id in ids:
+                    paths[id][next_id] = []
+            if self.neighbors == {}:
+                self.get_neighbors()
+
+            for end in ids:
+                for start in ids:
+                    paths[start][end] = helpers.find_shortest_path(self, start, end)
+
+            for start, paths_to_nodes in paths.items():
+                for id in ids:
+                    tmp += len(paths_to_nodes[id])
+                if sum == 0 or tmp < sum:
+                    sum = tmp
+                    radius = start
+
+            return "Graph's central vertex is %s" % radius
+
+        else:
+            return "Graph is not complete!"
 
 
 if __name__ == '__main__':

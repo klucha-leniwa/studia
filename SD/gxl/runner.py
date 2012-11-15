@@ -31,7 +31,7 @@ def main():
         returned_data = func()
         msg = '\n'
         msg += 'File successfully loaded!'
-        msg += '\nResult of function:' + str(returned_data)
+        msg += '\nResult of function: \n \t' + str(returned_data)
         msg += '\n'
         print msg
 
