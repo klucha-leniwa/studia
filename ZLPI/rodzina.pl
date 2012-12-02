@@ -50,4 +50,12 @@ pracownik(X):-wiek(X,Y),Y>19,Y<65.
 emeryt(X):-wiek(X,Y),Y>65.
 
 wiekszy(X,X,X).
-wiekszy(X,Y,Z):-
+wiekszy(X,Y,Z):- X>Y, wiekszy(X,Y,X)
+wiekszy(X,Y,Z):- X<Y, wiekszy(X,Y,Y)
+
+----ZADANIE 4----
+1.NIE
+2.odcinek(punkt(1,2), punkt(1,2)
+3.odcinek(punkt(1,2), punkt(1,B=C)
+4.punkt(X=X1, Y=Y1, Z=Z1)
+

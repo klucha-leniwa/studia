@@ -1,0 +1,10 @@
+Odpowiedz 1. (kolor nieba) 
+ 	 Niebieski 
+Odpowiedz 2. (imie i nazwisko autora) 
+ 	 Bogna Knychala 
+Odpowiedz 3. (imie i nazwisko uzytkownika) 
+ 	 Pawel Czyż 
+Odpowiedz 4. (latwosc programu w skali 0-3) 
+ 	 3 
+Odpowiedz 5. (opinia uzytkownika) 
+ 	 brak GUI 
