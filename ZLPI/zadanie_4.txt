@@ -1,0 +1,13 @@
+----ZADANIE 4----
+1.NIE
+2.odcinek(punkt(1,2), punkt(1,2)
+3.odcinek(punkt(1,2), punkt(1,B=C)
+4.punkt(X=X1, Y=Y1, Z=Z1)
+5.lot(londyn, paryz)
+6.'student'
+7.'Student'
+8.'Student'
+9.Student
+10.'Student'
+11.f(a,b)
+12.

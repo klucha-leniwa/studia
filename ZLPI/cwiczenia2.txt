@@ -1,0 +1,8 @@
+****Zadanie 1****
+merge/3: łączy dwie listy w nową uporządkowaną listę. Duplikacje nie są usuwane, a ich kolejność jest zachowana
+sort/2: dwa argumenty (lista, X) gdzie X jest True lub False w zależności czy posortowana. Duplikacje są usuwane
+msort/2: j.w. tylko nie usuwa duplikacji
+
+****Zadanie 2****
+moim zdaniem nie
+

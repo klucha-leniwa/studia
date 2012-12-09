@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	<body>
+		<style>
+			#my-mail-img {
+				display: none;
+			}
+		</style>
+		<span id="my-name">Bogna</span>
+		<span id="my-lastname">Knychała</span>
+		<div id="my-mail">
+			<span>Kontakt:<br/></span>
+			<img id='my-mail-img' src='349742.png' alt='mail' />
+		</div>
+		<script type="text/javascript">
+			var div = document.getElementById('my-mail');
+			var first = 'bk55016';
+			var sec = '@';
+			var last = 'st.amu.edu.pl'
+			div.innerHTML += ('<a href="mailto:'+first+sec+last+'">mój email</a>');
+		</script>
+		<noscript>
+			<style>
+			#my-mail-img {
+				display: block;
+			}
+			</style>			
+		</noscript>
+	</body>
+</html>
