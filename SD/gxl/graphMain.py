@@ -6,7 +6,7 @@ import sys
 
 class GraphMain():
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         self.is_directed = ''
         self.type = ''
         self.nodes_map = {}
@@ -16,6 +16,8 @@ class GraphMain():
         self.matrix = {}
         self.visited_list = {}
         self.is_integrated = ''
+        if 'graph_to_compare' in kwargs.keys():
+            self.graph_to_compare = kwargs.pop('graph_to_compare')
 
     def return_basics(self):
 
@@ -128,13 +130,21 @@ class GraphMain():
                     paths[start][end] = helpers.find_shortest_path(self, start, end)
 
             for start, paths_to_nodes in paths.items():
-                for id in ids:
-                    tmp += len(paths_to_nodes[id])
-                if sum == 0 or tmp < sum:
-                    sum = tmp
-                    radius = start
+                for path in paths_to_nodes.values():
+                    tmp += len(path)
+                if sum == 0 or tmp <= sum:
+                    if tmp == sum:
+                        radius.append(start)
+                        sum = tmp
+                    elif tmp<sum:
+                        sum = tmp
+                        radius = []
+                        radius.append(start)
+                    elif sum == 0:
+                        sum = tmp
+                tmp = 0
 
-            return "Graph's central vertex is %s" % radius
+            return "Graph's central vertex('es) is(are) %s" % radius
 
         else:
             return "Graph is not complete!"
