@@ -135,19 +135,19 @@ class GraphMain():
                 if sum == 0 or tmp <= sum:
                     if tmp == sum:
                         radius.append(start)
-                    else:
+                        sum = tmp
+                    elif tmp<sum:
                         sum = tmp
                         radius = []
                         radius.append(start)
+                    elif sum == 0:
+                        sum = tmp
                 tmp = 0
 
             return "Graph's central vertex('es) is(are) %s" % radius
 
         else:
             return "Graph is not complete!"
-
-    def check_iso(self):
-        return self.graph_to_compare.edges_map
 
 
 if __name__ == '__main__':

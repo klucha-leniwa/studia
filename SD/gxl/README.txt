@@ -8,7 +8,7 @@ Requirments
 
 In order to properly use framework, you need to have the following packages installed
 	1. lxml (easy_install lxml) - for parsing xml(gxl) files
-	2. networkx (easy_install networkx) - creating graphs
+	2. networkx (easy_install networkx) - implementation of vl2 algrythm
 
 Author
 ==========
