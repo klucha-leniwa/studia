@@ -1,0 +1,218 @@
+% main
+% Startuje system
+main :-
+    write('Witaj w biurze podrozy PARADAJS'),nl,
+    write('Pomozemy Ci wybrac idealne miejsce na urlop'),nl,
+    write('Zostanie Ci zadana seria pytan'),nl,
+    write('Odpowiadaj na nie T dla tak lub N dla nie'),nl,
+    wyczyscPamiec,
+    pytanie.
+
+pytanie :-
+    miejsce_to(Miejsce),!,
+    opisz(Miejsce),
+    fail.
+pytanie.
+
+% Miejsca na morzem
+miejsce_to(hel):-
+    said(lubiszwode, yes),
+    said(lubiszmorze, yes),
+    said(lubiszcisze, yes),
+    said(wpolsce, yes).
+
+miejsce_to(mielno):-
+    said(lubiszwode, yes),
+    said(lubiszmorze, yes),
+    said(lubiszcisze, no),
+    said(wpolsce, yes).
+
+miejsce_to(makarska):-
+    said(lubiszwode, yes),
+    said(lubiszmorze, yes),
+    said(lubiszciesze, no),
+    said(wpolsce, no).
+
+miejsce_to(baskavoda):-
+    said(lubiszwode, yes),
+    said(lubiszmorze, yes),
+    said(wpolsce, no),
+    said(lubiszciesze, yes).
+
+% Miejsca nad jeziorem
+miejsce_to(sierakow):-
+    said(lubiszwode, yes),
+    said(lubiszmorze, no),
+    said(lubiszjezioro,yes),
+    said(wpolsce, yes).
+
+miejsce_to(toronto):-
+    said(lubiszwode, yes),
+    said(lubiszmorze, no),
+    said(lubiszjezioro, yes),
+    said(wpolsce, no).
+
+% Miejsca w gorach
+miejsce_to(szklarska):-
+    said(lubiszgory, yes),
+    said(lubisznarty, yes),
+    said(wpolsce, yes).
+
+miejsce_to(harrachov):-
+    said(lubiszgory, yes),
+    said(lubisznarty, yes),
+    said(wpolsce, no).
+
+miejsce_to(karpacz):-
+    said(lubiszgory, yes),
+    said(lubisznarty, no),
+    said(lubiszwspinaczke, yes),
+    said(wpolsce, yes).
+
+miejsce_to(tanzania):-
+    said(lubiszgory, yes),
+    said(lubisznarty, no),
+    said(lubiszwspinaczke, yes),
+    said(wpolsce, no).
+
+% Miejsca w miastach
+miejsce_to(krakow):-
+    said(lubiszmiasto, yes),
+    said(wpolsce, yes).
+
+miejsce_to(barcelona):-
+    said(lubiszmiasto, yes),
+    said(wpolsce, no).
+
+% Agroturystyka
+miejsce_to(gorzno):-
+    said(lubiszmiasto, no).
+
+:- dynamic(facts/2).
+
+wyczyscPamiec :-
+    retract(facts(_,_)),
+    fail.
+wyczyscPamiec.
+
+said(Pytanie,Odpowiedz):-
+    facts(Pytanie,Odpowiedz).
+
+said(Pytanie,Odpowiedz) :-
+   \+ facts(Pytanie,_),nl,
+    ask(Pytanie),
+    get_yes_or_no(Odp),
+    asserta(facts(Pytanie,Odp)),
+    Odp = Odpowiedz.
+
+% seria pytan
+ask(lubiszwode):-
+    write('Lubisz wypoczynek nad wodą?'),nl.
+
+ask(lubiszmorze):-
+    write('Lubisz szum morskich fal?'),nl.
+
+ask(lubiszcisze):-
+    write('Lubisz wyciszyć sie nad morzem i nie mieć problemów ze znalezieniem miejsca na plaży?'),nl.
+
+ask(lubiszjezioro):-
+    write('Skoro nie morze to może jezioro?'),nl.
+
+ask(lubiszgory):-
+    write('To może jednak góry?'),nl.
+
+ask(lubisznarty):-
+    write('Preferujesz szaleństwo na nartach?'),nl.
+
+ask(lubiszwspinaczke):-
+    write('To może wolisz sie wspinać?'),nl.
+
+ask(lubiszmiasto):-
+    write('Jak nie góry i nie morze/jezioro to może zwiedzanie miasta?'),nl.
+
+ask(wpolsce):-
+    write('Czy chcesz spędzić urlop w Polsce?'),nl.
+
+% opisy miejscowosci
+opisz(hel):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Hel'),nl,
+    write('Miejscowość która znajduje się na samym koniuszku Polski!'),nl.
+
+opisz(mielno):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Mielno'),nl,
+    write('Miejscowość nad morzem z wieloma atrakcjami turystycznymi!'),nl.
+
+opisz(makarska):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Makarska'),nl,
+    write('Miejscowość w Chorwacji, położona w malowniczej Dalmacji, tam gdzie zawsze świeci Słońce!'),nl.
+
+opisz(baskavoda):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Makarska'),nl,
+    write('Mniej popularna miejscowość w Chorwacji, jednak Słońca tam pełno!'),nl.
+
+opisz(sierakow):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Sieraków'),nl,
+    write('Mała miejscowość w Wielkopolsce, możesz tam wypożyczyć kajaki i skorzystać z innych wodnych atrakcji!'),nl.
+
+opisz(toronto):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Toronto'),nl,
+    write('Miejscowość w Kanadzie położona nad jeziorem Ontario, należącym do piątki Wielkich Jezior Ameryki Północnej!'),nl.
+
+opisz(szklarska):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Szklarska Poręba'),nl,
+    write('Miejscowość przy granicy, gdzie niebraknie tras narciarskich!'),nl.
+
+opisz(harrachov):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Harrachov'),nl,
+    write('Miejscowość w Czechach, niedaleko granicy z Polską, pełno tam narciarskich szlaków i co ważniejsze śniegu!'),nl.
+
+opisz(karpacz):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Karpacz'),nl,
+    write('W pobliżu znajduje się Śnieżka, na którą możesz się wspinać!'),nl.
+
+opisz(tanzania):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Tanzania'),nl,
+    write('Kraj w Afryce na terenie, którego znajduje się Kilimandżaro - najwyższy szczyt Afryki - na który możesz się wspiąć!'),nl.
+
+opisz(krakow):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Kraków'),nl,
+    write('Piekne dorożki, sukiennice, starówka i wiele wiele innych atrakcji'),nl.
+
+opisz(barcelona):-
+    nl,
+    write('Idealne miejsce dla Ciebie na wypoczynek to Barcelona'),nl,
+    write('Miasto w Hiszpanii, pełne zabytków takich jak katedra Świętej Rodziny i stadion. A wszystko to w gorącej Hiszpanii'),nl.
+
+opisz(gorzno):-
+    nl,
+    write('Przykro mi, ale ciężko Ci sie zdecydować'),nl,
+    write('Dla niezdecydowanych polecamy gospodarstwo agroturystyczne Górzno'),nl.
+
+% pobranie i zinterpretowanie odpowiedzi uzytkownika
+get_yes_or_no(Odp) :-
+    get(Char),
+    get0(_),
+    interpret(Char,Odp),
+    !.
+
+get_yes_or_no(Odp) :-
+    nl,
+    put(7),
+    write('Wpisuj tylko T(t) lub N(n):'),
+    get_yes_or_no(Odp).
+
+interpret(84,yes).
+interpret(116,yes).
+interpret(78,no).
+interpret(110,no).
